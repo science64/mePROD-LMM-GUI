@@ -1,5 +1,5 @@
 __author__ = "Süleyman Bozkurt"
-__version__ = "v3.0.0"
+__version__ = "v3.0.1"
 __maintainer__ = "Süleyman Bozkurt"
 __email__ = "sbozkurt.mbg@gmail.com"
 __date__ = '18.01.2022'
@@ -58,7 +58,7 @@ class MyWindow:
         parent.configure(bg=BG)
 
         # ── Fonts ───────────────────────────────────────────────
-        self.f_header   = Font(family='Segoe UI', size=14, weight='bold')
+        self.f_header   = Font(family='Segoe UI', size=11, weight='bold')
         self.f_sub      = Font(family='Segoe UI', size=9)
         self.f_section  = Font(family='Segoe UI', size=9, weight='bold')
         self.f_label    = Font(family='Segoe UI', size=9)
@@ -82,19 +82,18 @@ class MyWindow:
                   indicatorcolor=[('selected', ACCENT), ('!selected', '#CBD5E1')])
 
         # ── Header bar ─────────────────────────────────────────
-        header = Frame(parent, bg=HEADER_BG, height=48)
+        header = Frame(parent, bg=HEADER_BG)
         header.pack(fill=X, side=TOP)
-        header.pack_propagate(False)
 
         Label(header, text='mePROD App', font=self.f_header,
-              bg=HEADER_BG, fg=HEADER_FG).pack(side=LEFT, padx=16, pady=8)
+              bg=HEADER_BG, fg=HEADER_FG).pack(side=LEFT, padx=16, pady=10)
         Label(header, text=f'{__version__}  |  DynaTMT 2.9.4  |  PBLMM 2.1.3',
               font=self.f_sub, bg=HEADER_BG, fg='#94A3B8').pack(side=LEFT, padx=4)
         Label(header, text='S. Bozkurt @2026', font=self.f_sub,
               bg=HEADER_BG, fg='#94A3B8').pack(side=RIGHT, padx=16)
 
         # ── Body ────────────────────────────────────────────────
-        body = Frame(parent, bg=BG, padx=14, pady=6)
+        body = Frame(parent, bg=BG, padx=14, pady=8)
         body.pack(fill=BOTH, expand=True)
         body.columnconfigure(0, weight=1)
         body.rowconfigure(4, weight=1)   # console row expands
@@ -103,7 +102,7 @@ class MyWindow:
         def card(parent_frame, row, col, title, colspan=1, sticky='ew', **kw):
             outer = Frame(parent_frame, bg=BG)
             outer.grid(row=row, column=col, columnspan=colspan,
-                       sticky=sticky, padx=3, pady=3, **kw)
+                       sticky=sticky, padx=3, pady=6, **kw)
             outer.columnconfigure(0, weight=1)
             hdr = Frame(outer, bg=SECTION_HDR, highlightbackground=BORDER,
                         highlightthickness=1)
@@ -127,7 +126,7 @@ class MyWindow:
         for txt, val in [('MS2  (IT adjustment + baseline correction)', 'MS2'),
                          ('MS3  (no IT adj., no baseline correction)', 'MS3')]:
             ttk.Radiobutton(rb_frame, text=txt, value=val, variable=self.msLevelVar,
-                            style='Card.TRadiobutton').pack(side=LEFT, padx=(0, 28))
+                            style='Card.TRadiobutton').pack(side=LEFT, padx=(0, 158))
 
         # ═══════════════════════════════════════════════════════
         #  ROW 1 — Normalization + Statistics side-by-side
@@ -149,7 +148,8 @@ class MyWindow:
         self.statisticVar = StringVar(value='LMM')
         sf = Frame(stat_c, bg=CARD_BG)
         sf.pack(anchor=W)
-        for txt, val in [('Linear Mixed Model', 'LMM'), ('Unpaired t-test', 'ttest')]:
+        for txt, val in [('Linear Mixed Model', 'LMM'), ('Unpaired t-test', 'ttest'),
+                         ('No Statistics', 'none')]:
             ttk.Radiobutton(sf, text=txt, value=val, variable=self.statisticVar,
                             style='Card.TRadiobutton').pack(side=LEFT, padx=(0, 14))
 
@@ -164,7 +164,7 @@ class MyWindow:
 
         Label(psm_row, text='PSMs File:', font=self.f_label, bg=CARD_BG,
               fg=TEXT_PRIMARY,
-              width=11, anchor=W).pack(side=LEFT, padx=(0, 8)) 
+              width=12, anchor=W).pack(side=LEFT, padx=(0, 3)) 
 
         self.browseButton = Button(psm_row, text=' Browse... ', font=self.f_btn,
                                    bg=ACCENT, fg='white', bd=0, padx=10, pady=2,
@@ -185,7 +185,7 @@ class MyWindow:
         Label(out_row, text='Output Name:', font=self.f_label, bg=CARD_BG,
               fg=TEXT_PRIMARY).pack(side=LEFT, padx=(0, 8))
 
-        self.outputNamebox = Text(out_row, font=self.f_entry, bd=0, height=1,
+        self.outputNamebox = Text(out_row, font=self.f_entry, bd=0, height=1.4,
                                   highlightthickness=1, highlightbackground=BORDER,
                                   highlightcolor=ACCENT, bg='#F8FAFC',
                                   insertbackground=TEXT_PRIMARY, wrap=WORD)
@@ -195,12 +195,13 @@ class MyWindow:
         #  ROW 3 — Conditions + Pairs
         # ═══════════════════════════════════════════════════════
         row3 = Frame(body, bg=BG)
-        row3.grid(row=3, column=0, columnspan=2, sticky='ew')
+        row3.grid(row=3, column=0, columnspan=2, sticky='nsew')
         row3.columnconfigure(0, weight=3)
         row3.columnconfigure(1, weight=2)
+        row3.rowconfigure(0, weight=1)
 
-        cond_c = card(row3, 0, 0, '  Conditions')
-        self.conditionbox = Text(cond_c, font=self.f_entry, bd=0, height=3, wrap=WORD,
+        cond_c = card(row3, 0, 0, '  Conditions', sticky='nsew')
+        self.conditionbox = Text(cond_c, font=self.f_entry, bd=0, height=4, wrap=WORD,
                                  highlightthickness=1, highlightbackground=BORDER,
                                  highlightcolor=ACCENT, bg='#F8FAFC',
                                  insertbackground=TEXT_PRIMARY)
@@ -217,8 +218,8 @@ class MyWindow:
         self.browseButtonCondition.pack(anchor=W)
         _hover_bind(self.browseButtonCondition, ACCENT, ACCENT_HOVER)
 
-        pair_c = card(row3, 0, 1, '  Pairs')
-        self.pairsbox = Text(pair_c, font=self.f_entry, bd=0, height=3, wrap=WORD,
+        pair_c = card(row3, 0, 1, '  Pairs', sticky='nsew')
+        self.pairsbox = Text(pair_c, font=self.f_entry, bd=0, height=4, wrap=WORD,
                              highlightthickness=1, highlightbackground=BORDER,
                              highlightcolor=ACCENT, bg='#F8FAFC',
                              insertbackground=TEXT_PRIMARY)
@@ -259,7 +260,7 @@ class MyWindow:
                                       bg=STATUS_BG, fg=STATUS_FG, bd=0,
                                       insertbackground=STATUS_FG,
                                       selectbackground='#334155', wrap=WORD,
-                                      padx=10, pady=6, height=14)
+                                      padx=10, pady=6, height=4)
         self.statusbar.grid(row=0, column=0, sticky='nsew')
         self.statusbar.tag_configure('center', justify=CENTER)
 
@@ -267,7 +268,7 @@ class MyWindow:
         #  ROW 5 — Action buttons (same style as Browse)
         # ═══════════════════════════════════════════════════════
         btn_frame = Frame(body, bg=BG)
-        btn_frame.grid(row=5, column=0, columnspan=2, pady=(6, 4))
+        btn_frame.grid(row=5, column=0, columnspan=2, pady=(8, 10))
 
         self.runbutton = Button(btn_frame, text='  Run Analysis  ', font=self.f_btn_lg,
                                 fg='white', bg=ACCENT, bd=0, padx=18, pady=5,
@@ -287,7 +288,7 @@ class MyWindow:
         _hover_bind(self.openbutton, ACCENT, ACCENT_HOVER)
 
         # ── Startup message (centered) ──────────────────────────
-        self._status_centered('>> mePROD App v3.0.0 Started! <<\n')
+        self._status_centered('>> mePROD App v3.0.1 Started! <<\n')
         self._status_centered('━' * 46 + '\n')
 
     def _status_centered(self, text):
@@ -475,7 +476,10 @@ class MyWindow:
         normalization_type = self.normVar.get()
         finalStatisticalMethod = self.statisticVar.get().strip()
 
-        if pairsFinal == [['']]:
+        if finalStatisticalMethod == 'none':
+            finalStatisticalMethod = None
+            pairsFinalOutput = 'None'
+        elif pairsFinal == [['']]:
             finalStatisticalMethod = None
             pairsFinalOutput = 'None'
         else:

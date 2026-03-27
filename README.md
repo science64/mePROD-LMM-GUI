@@ -4,11 +4,16 @@ A graphical user interface for analyzing proteomics data using linear mixed mode
 
 ## Versions
 
-mePROD-LMM-GUI **v3.0.0** (2026-03-26)
+mePROD-LMM-GUI **v3.0.1** (2026-03-27)
 
 DynaTMT-py **v2.9.4** (2026-03-19) — [GitHub](https://github.com/science64/DynaTMT)
 
 PBLMM **v2.1.3** (2026-02-02) — [GitHub](https://github.com/science64/PBLMM)
+
+## What's New in v3.0.1
+
+- **DPI awareness for sharp text on 4K/HiDPI screens** — text on buttons and labels now renders at native resolution on high-DPI displays (Windows `SetProcessDpiAwareness`)  
+- **"No Statistics" option** — new radio button in Statistical Method section allows exporting a protein table without running any statistical analysis  
 
 ## What's New in v3.0.0
 
@@ -31,7 +36,7 @@ Multiplexed enhanced Protein Dynamic mass spectrometry (mePROD MS) can be used f
   
 - **MS2 and MS3 Support**: Select your acquisition method; the app automatically applies the correct processing pipeline  
 - **Data Processing**: Filter PSMs, adjust for injection time variations (MS2), and apply normalization  
-- **Statistical Analysis**: Peptide-based linear mixed model (PBLMM) or unpaired t-tests  
+- **Statistical Analysis**: Peptide-based linear mixed model (PBLMM), unpaired t-tests, or no statistics (protein table export)  
 - **Protein Annotation**: Annotate proteins with gene names using UniProt database  
 - **Mitochondrial Protein Identification**: Identify mitochondrial proteins using MitoCarta 3.0 database  
 - **Comprehensive Reporting**: Generate detailed Excel reports with analysis results  
@@ -119,7 +124,7 @@ python main.py
 
 1. **Select MS Level**: Choose MS2 or MS3 depending on your acquisition method  
 2. **Select Normalization**: Total intensity (default), Median, or TMM  
-3. **Select Statistics**: Linear mixed model (default) or Unpaired t-test  
+3. **Select Statistics**: Linear mixed model (default), Unpaired t-test, or No Statistics (protein table export only)  
 4. **Browse for PSMs file**: Load your PSM data file (`.txt` or `.xlsx`)  
 5. **Enter output name**: Name for the results file  
 6. **Configure conditions**: Comma-separated list (e.g., `Light,DMSO,DMSO,DMSO,Treatment,Treatment,Treatment,Boost`)  
