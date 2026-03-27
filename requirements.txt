@@ -1,9 +1,10 @@
-matplotlib==3.7.2
-numpy==1.25.1
-pandas==2.1.0
-pandas_stubs==2.0.3.230814
-requests==2.31.0
-scipy==1.11.1
-seaborn==0.12.1
-statsmodels==0.14.0
-openpyxl==3.1.2
+matplotlib>=3.7.2
+numpy>=1.25.1
+pandas<=2.3.3
+requests>=2.31.0
+scipy>=1.11.1
+seaborn>=0.12.1
+statsmodels>=0.14.0
+openpyxl>=3.1.2
+DynaTMT @ git+https://github.com/science64/DynaTMT.git
+PBLMM @ git+https://github.com/science64/PBLMM.git

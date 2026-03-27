@@ -163,3 +163,4 @@ cython_debug/
 DynaTMT_SB_exclude.py
 mssuite_SB_exclude.py
 pbLMM_SB_exclude.py
+extra_information/
